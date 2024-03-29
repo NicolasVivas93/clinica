@@ -7,10 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter @Setter
 public class Paciente {
     
@@ -26,19 +30,4 @@ public class Paciente {
     private LocalDate fechaNac;
     
     private String telefono;
-
-    public Paciente() {
-    }
-
-    public Paciente(Long id, String dni, String nombre, String apellido,
-            LocalDate fechaNac, String telefono) {
-        this.id = id;
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaNac = fechaNac;
-        this.telefono = telefono;
-    }
-    
-    
 }
