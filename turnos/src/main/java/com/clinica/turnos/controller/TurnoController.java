@@ -1,6 +1,7 @@
 
 package com.clinica.turnos.controller;
 
+import com.clinica.turnos.dto.TurnoDto;
 import com.clinica.turnos.model.Turno;
 import com.clinica.turnos.service.ITurnoService;
 import java.time.LocalDate;
@@ -24,8 +25,8 @@ public class TurnoController {
     private ITurnoService turnoServ;
     
     @PostMapping("/crear")
-    public String createTurno(@RequestBody LocalDate fecha, @RequestBody String motivo, @RequestBody String dniPaciente) {
-        turnoServ.saveTurno(fecha, motivo, dniPaciente);
+    public String createTurno(@RequestBody TurnoDto turno) {
+        turnoServ.saveTurno(turno.getFecha(), turno.getMotivoTurno(), turno.getDniPaciente());
         return "Turno creado";
     }
     

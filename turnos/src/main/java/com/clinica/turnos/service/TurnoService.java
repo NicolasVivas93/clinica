@@ -1,18 +1,23 @@
 
 package com.clinica.turnos.service;
 
+import com.clinica.turnos.model.Paciente;
 import com.clinica.turnos.model.Turno;
 import com.clinica.turnos.repository.ITurnoRepository;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class TurnoService implements ITurnoService {
     
     @Autowired
     private ITurnoRepository turnoRepo;
+    
+    @Autowired
+    private RestTemplate apiConsumir;
 
     @Override
     public List<Turno> getTurnos() {
@@ -26,15 +31,14 @@ public class TurnoService implements ITurnoService {
 
     @Override
     public void saveTurno(LocalDate fecha, String motivo, String dniPaciente) {
-        // Buscar el paciente en la api pacientes
-        // Busco el paciente a través de la coincidencia con el dni
-        // Paciente paciente = paciente traído de la api      
-        // String nombreCompletoPaciente = traigo el nombre del paciente que consumí de la api y encontré a través del dni
+        
+        Paciente paciente = apiConsumir.getForObject("http://localhost:9001/paciente/traerdni/" + dniPaciente, Paciente.class);    
+        String nombreCompletoPaciente = paciente.getNombre() + " " + paciente.getApellido();
         
         Turno turno = new Turno();
         turno.setFecha(fecha);
         turno.setMotivoTurno(motivo);
-        //turno.setNombrePaciente();
+        turno.setNombrePaciente(nombreCompletoPaciente);
         
         turnoRepo.save(turno);
     }

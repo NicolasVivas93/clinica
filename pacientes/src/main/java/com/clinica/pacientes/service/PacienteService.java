@@ -37,10 +37,10 @@ public class PacienteService implements IPacienteService {
         pacienteRepo.deleteById(id);
     }
 
-//    @Override
-//    public Paciente findPacienteByDni(String dni) {
-//        pacienteRepo.find
-//    }
+    @Override
+    public Paciente findPacienteByDni(String dni) {
+        return pacienteRepo.findByDni(dni);
+    }
 
     
 }

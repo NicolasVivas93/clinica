@@ -31,6 +31,11 @@ public class PacienteController {
         return pacienteServ.findPaciente(id);
     }
     
+    @GetMapping("/traerdni/{dni}")
+    public Paciente findPacienteDni(@PathVariable String dni) {
+        return pacienteServ.findPacienteByDni(dni);
+    }
+    
     @PostMapping("/crear")
     public String savePaciente(@RequestBody Paciente paciente) {
         pacienteServ.savePaciente(paciente);
