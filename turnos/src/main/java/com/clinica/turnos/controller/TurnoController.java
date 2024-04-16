@@ -2,9 +2,10 @@
 package com.clinica.turnos.controller;
 
 import com.clinica.turnos.dto.TurnoDto;
+import com.clinica.turnos.model.Paciente;
 import com.clinica.turnos.model.Turno;
+import com.clinica.turnos.repository.ITurnoClient;
 import com.clinica.turnos.service.ITurnoService;
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,6 +23,9 @@ public class TurnoController {
     
     @Autowired
     private ITurnoService turnoServ;
+    
+    @Autowired
+    private ITurnoClient turnoClient;
     
     @PostMapping("/crear")
     public String createTurno(@RequestBody TurnoDto turno) {
@@ -33,6 +36,12 @@ public class TurnoController {
     @GetMapping("/traer")
     public List<Turno> getTurnos() {
         return turnoServ.getTurnos();
+    }
+    
+    // Llamada desde Feign
+    @GetMapping("/traerPorDni/{dniPaciente}")
+    public Paciente getPacientePorDni(@PathVariable ("dniPaciente") String dniPaciente) {
+        return turnoClient.getPacientePorDni(dniPaciente);
     }
     
     @GetMapping("/buscar/{id}")
